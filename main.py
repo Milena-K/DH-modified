@@ -5,7 +5,6 @@ import library_ecc as lib
 class Person():
     def __init__(self, name):
         self.name = name
-        # private_value = private_key.private_numbers().x
         self.private_key = lib.generate_private_key()
         self.public_key = lib.generate_pub_key(self.private_key)
         # stores "alice": (pub_key, shared_key, is_verified)
@@ -16,7 +15,8 @@ class Person():
         self.pub_key_of[name] = (peer_pub_key, shared_key, False)
 
     def share_pub_key_with(self, name): # -> (pub_key, encr_sign_hash_keys)
-        if name not in self.pub_key_of.keys():
+        # if the person is the first to share their pub key
+        if self.pub_key_of.get(name) is None:
             return (self.public_key, None)
 
         (peer_pub_key, shared_key, _) = self.pub_key_of[name]

@@ -16,7 +16,6 @@ def generate_pub_key(private_key):
 
 def generate_shared_key(private_key, peer_pub_key):
     shared_key = private_key.exchange(ec.ECDH(), peer_pub_key)
-    # should I save the shared_key or the derived key?
     return derive_aes_key(shared_key)
 
 def derive_aes_key(shared_key):
